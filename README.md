@@ -1,4 +1,4 @@
-# iso-logger
+# esm-iso-logger
 
 A zero-dependency, isomorphic logger that looks great in Node.js, browsers, VS Code, GitHub Actions, Deno, Bun… and anywhere else JavaScript runs. Universal logging core. One event emitter, one logger class, zero deps. Bolt on any backend by subscribing to the same single event. Tree-shakeable ESM only, no CommonJS.
 
@@ -17,7 +17,7 @@ Ships with pretty console printers for node (ansi) and browser (css):
 
 ## Installation
 
-`npm i iso-logger`
+`npm i esm-iso-logger`
 
 ----------------------------------
 
@@ -40,7 +40,7 @@ import {
   defaultPalette2,        // Darker alternative palette
 
   defaultArgsFormatter    // turns args[] -> single string (used by LogPrinter, reusable)
-} from 'iso-logger';
+} from 'esm-iso-logger';
 ```
 
 ### Logger:
@@ -96,13 +96,13 @@ Browser                      -> falls back to unstyled if console lacks %c
 ## Quickstart
 
 ```typescript
-import { LogPrinter } from 'iso-logger';
+import { LogPrinter } from 'esm-iso-logger';
 
 // 2. spin it up (can have many)
 new LogPrinter('MyApp');
 
 // 3. create contextual loggers
-import { Logger } from 'iso-logger';
+import { Logger } from 'esm-iso-logger';
 const logger = new Logger('UserService');
 
 logger.info('Server listening on port', 3000);
@@ -119,7 +119,7 @@ logger.info('Server listening on port', 3000);
 The core only emits; it never cares who listens.
 
 ```typescript
-import { loggingEventEmitter, type LogMessage } from 'iso-logger';
+import { loggingEventEmitter, type LogMessage } from 'esm-iso-logger';
 
 // plain function
 loggingEventEmitter.on('log', (msg: LogMessage) => {
