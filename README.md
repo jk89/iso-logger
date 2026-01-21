@@ -21,7 +21,79 @@ Ships with pretty console printers for node (ansi) and browser (css):
 
 ----------------------------------
 
-## Built-in LogPrinter
+## Api surface
+
+```typescript
+import {
+  Logger,                 // Create named loggers
+  LogLevel,               // Union type: 'log'|'info'|'warn'|'error'|'debug'|'verbose'|'fatal'
+  LogMessage,             // Shape of each log event
+  loggingEventEmitter,    // Shared EventEmitter – subscribe to 'log' to build custom backends
+
+  LogPrinter,             // Ready-made console backend (auto-picks Node ANSI or Browser CSS)
+  ILogPrinter,            // Interface if you want to write your own printer
+  LogPrinterOptions,      // Constructor options bag for LogPrinter
+
+  Colour,                 // Colour builder: Colour.rgb(r,g,b).bold.italic …
+  Palette,                // Palette interface map used by LogPrinter
+  defaultPalette,         // Default colours (light-ish)
+  defaultPalette2,        // Darker alternative palette
+
+  defaultArgsFormatter    // turns args[] -> single string (used by LogPrinter, reusable)
+} from 'iso-logger';
+```
+
+### Logger:
+```typescript
+  new Logger(context: string)
+  logger.log|info|warn|error|debug|verbose|fatal(...args: unknown[])
+```
+
+### LogMessage shape:
+```typescript
+  interface LogMessage {
+    level: 'log'|'info'|'warn'|'error'|'debug'|'verbose'|'fatal';
+    args: unknown[];
+    context: string;
+    timestamp: string; // ISO
+  }
+```
+
+### LogPrinter (optional):
+```typescript
+  const printer = new LogPrinter<H extends string>(
+    header: H,
+    levels?: LogLevel[],           // Log levels (default: ['log', 'info', 'error', 'warn', 'debug', 'verbose', 'fatal'])
+    palette?: Palette,             // RGB + styles (default: defaultPalette)
+    formatter?: (args[]) => string // Formatter (default: defaultArgsFormatter)
+  )
+```
+
+### Runtime toggle:
+```typescript
+  printer.disable('debug');
+  printer.enable('debug');
+```
+
+### Multiple printers / backends are possible:
+
+```typescript
+new LogPrinter('Prod', ['error', 'fatal']); // console only errors
+new LogPrinter('Dev');                      // console everything
+```
+
+### Environment quirks:
+
+```
+NO_COLOR=1 or FORCE_COLOR=0  -> plain text
+FORCE_COLOR=3                -> full 24-bit ANSI
+VS Code / GitHub Actions     -> auto-detected true-color
+Browser                      -> falls back to unstyled if console lacks %c
+```
+
+----------------------------------
+
+## Quickstart
 
 ```typescript
 import { LogPrinter } from 'iso-logger';
@@ -74,66 +146,7 @@ new FileSink('./app.jsonl');
 
 You can run any number of backends side-by-side; each receives every LogMessage and decides what to do with it.
 
-----------------------------------
-
-## Api surface
-
-Logger:
-```typescript
-  new Logger(context: string)
-  logger.log|info|warn|error|debug|verbose|fatal(...args: unknown[])
-```
-
-LogMessage shape:
-```typescript
-  interface LogMessage {
-    level: 'log'|'info'|'warn'|'error'|'debug'|'verbose'|'fatal';
-    args: unknown[];
-    context: string;
-    timestamp: string; // ISO
-  }
-```
-
-LogPrinter (optional):
-```typescript
-  new LogPrinter<H extends string>(
-    header: H,
-    levels?: LogLevel[],           // Log levels (default: ['log', 'info', 'error', 'warn', 'debug', 'verbose', 'fatal'])
-    palette?: Palette,             // RGB + styles (default: defaultPalette)
-    formatter?: (args[]) => string // Formatter (default: defaultArgsFormatter)
-  )
-```
-
-Runtime toggle:
-```typescript
-  printer.disable('debug');
-  printer.enable('debug');
-```
-
-----------------------------
-
-Multiple printers / backends are possible:
-
-```typescript
-new LogPrinter('Prod', ['error', 'fatal']); // console only errors
-new LogPrinter('Dev');                      // console everything
-new GrafanaSink(process.env.GRAFANA_KEY);   // still sees everything
-```
-
-----------------------------
-
-Environment quirks:
-
-```
-NO_COLOR=1 or FORCE_COLOR=0  -> plain text
-FORCE_COLOR=3                -> full 24-bit ANSI
-VS Code / GitHub Actions     -> auto-detected true-color
-Browser                      -> falls back to unstyled if console lacks %c
-```
-
-----------------------------------
-
-# Test commands
+## Test commands
 
 ```bash
 npm run demo:node:default          # default colour detection
