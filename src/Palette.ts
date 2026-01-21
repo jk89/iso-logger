@@ -120,7 +120,7 @@ export interface Palette {
 }
 
 export const defaultPalette: Palette = {
-  header: Colour.rgb(140, 194, 101),
+  header: Colour.rgb(140, 194, 101).bold,
   context: Colour.rgb(209, 143, 82),
   time: Colour.rgb(215, 218, 224),
   log: Colour.rgb(140, 194, 101),
@@ -133,7 +133,7 @@ export const defaultPalette: Palette = {
 };
 
 export const defaultPalette2: Palette = {
-  header: Colour.rgb(38, 162, 105),
+  header: Colour.rgb(38, 162, 105).bold,
   context: Colour.rgb(162, 115, 76),
   time: Colour.rgb(255, 255, 255),
   log: Colour.rgb(38, 162, 105),
