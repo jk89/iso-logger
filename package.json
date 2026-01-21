@@ -1,6 +1,6 @@
 {
   "name": "esm-iso-logger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple dependency free logging utility",
   "type": "module",
   "publishConfig": {

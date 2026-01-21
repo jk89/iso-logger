@@ -1,4 +1,4 @@
-import { EventEmitter } from 'logger/events';
+import { EventEmitter } from 'esm-iso-logger/events';
 
 export type LogLevel = 'log' | 'info' | 'error' | 'warn' | 'debug' | 'verbose' | 'fatal';
 
@@ -20,9 +20,10 @@ export interface LoggingEventEmitter {
   emit<K extends keyof LoggingEvents>(event: K, ...args: LoggingEvents[K]): boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
 export const loggingEventEmitter: LoggingEventEmitter = new EventEmitter();
 
-export class Logger<C extends string> {
+export class Logger<C extends string = string> {
   constructor(private context: NonEmptyString<C>) {}
 
   private emitLog(level: LogLevel, args: unknown[]) {
