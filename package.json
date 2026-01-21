@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A simple dependency free logging utility",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "node": {
