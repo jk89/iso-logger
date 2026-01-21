@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Logger Demo</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 2rem;
+      background: #1e1e1e;
+      color: #fff;
+    }
+    h1 { color: #4ec9b0; }
+    p { color: #9cdcfe; }
+    button {
+      background: #0e639c;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin: 0.25rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover { background: #1177bb; }
+    .instructions {
+      background: #2d2d2d;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Browser Logger Demo</h1>
+
+  <div class="instructions">
+    <p>Open DevTools (F12) → Console tab to see the colored log output.</p>
+  </div>
+
+  <h2>Log Levels</h2>
+  <button onclick="runLog()">Log</button>
+  <button onclick="runInfo()">Info</button>
+  <button onclick="runWarn()">Warn</button>
+  <button onclick="runError()">Error</button>
+  <button onclick="runDebug()">Debug</button>
+  <button onclick="runVerbose()">Verbose</button>
+  <button onclick="runFatal()">Fatal</button>
+
+  <h2>All Levels</h2>
+  <button onclick="runAll()">Run All</button>
+
+  <h2>With Data</h2>
+  <button onclick="runWithObject()">Log Object</button>
+  <button onclick="runMultipleArgs()">Multiple Args</button>
+
+  <script type="module">
+    import { Logger, LogPrinter } from '/bundle.js';
+
+    const printer = new LogPrinter('MyApp');
+    const logger = new Logger('DemoContext');
+
+    window.runLog = () => logger.log('This is a log message');
+    window.runInfo = () => logger.info('This is an info message');
+    window.runWarn = () => logger.warn('This is a warning message');
+    window.runError = () => logger.error('This is an error message');
+    window.runDebug = () => logger.debug('This is a debug message');
+    window.runVerbose = () => logger.verbose('This is a verbose message');
+    window.runFatal = () => logger.fatal('This is a fatal message');
+
+    window.runAll = () => {
+      logger.log('This is a log message');
+      logger.info('This is an info message');
+      logger.warn('This is a warning message');
+      logger.error('This is an error message');
+      logger.debug('This is a debug message');
+      logger.verbose('This is a verbose message');
+      logger.fatal('This is a fatal message');
+    };
+
+    window.runWithObject = () => {
+      logger.log('User data:', { name: 'John', age: 30, active: true });
+    };
+
+    window.runMultipleArgs = () => {
+      logger.info('Multiple', 'arguments', 'here', 123, true);
+    };
+
+    // Run all on load so you can see it immediately
+    console.log('%c=== Browser Logger Demo ===', 'font-size: 16px; font-weight: bold; color: #4ec9b0;');
+    window.runAll();
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Dev folder
+test/
+
+# tsconfig & lint configs
+tsconfig*.json
+.prettierrc*
+.prettierignore
+.eslintrc*
+eslint.config.*
+
+# Source maps / build artefacts we don’t ship
+*.map
+*.tsbuildinfo
+
+# Source files
+src/
+
+# Ignore files
+.gitignore
+.npmrc

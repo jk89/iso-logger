@@ -1,0 +1,81 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "description": "A simple dependency free logging utility",
+  "type": "module",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/index.node.js",
+        "types": "./dist/index.node.d.ts"
+      },
+      "browser": {
+        "import": "./dist/index.browser.js",
+        "types": "./dist/index.browser.d.ts"
+      },
+      "default": {
+        "import": "./dist/index.browser.js",
+        "types": "./dist/index.browser.d.ts"
+      }
+    },
+    "./events": {
+      "node": {
+        "import": "./dist/EventEmitter.node.js",
+        "types": "./dist/EventEmitter.node.d.ts"
+      },
+      "browser": {
+        "import": "./dist/EventEmitter.browser.js",
+        "types": "./dist/EventEmitter.browser.d.ts"
+      },
+      "default": {
+        "import": "./dist/EventEmitter.browser.js",
+        "types": "./dist/EventEmitter.browser.d.ts"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "demo:node:force3": "FORCE_COLOR=3 node --experimental-strip-types test/demo-node.ts",
+    "demo:node:force2": "FORCE_COLOR=2 node --experimental-strip-types test/demo-node.ts",
+    "demo:node:force1": "FORCE_COLOR=1 node --experimental-strip-types test/demo-node.ts",
+    "demo:node:force0": "FORCE_COLOR=0 node --experimental-strip-types test/demo-node.ts",
+    "demo:node:nocolor": "NO_COLOR=1 node --experimental-strip-types test/demo-node.ts",
+    "demo:node:truecolor": "COLORTERM=truecolor node --experimental-strip-types test/demo-node.ts",
+    "demo:node:vscode": "TERM_PROGRAM=vscode node --experimental-strip-types test/demo-node.ts",
+    "demo:node:github": "GITHUB_ACTIONS=true node --experimental-strip-types test/demo-node.ts",
+    "demo:node:gitea": "GITEA_ACTIONS=true node --experimental-strip-types test/demo-node.ts",
+    "demo:node:xterm256": "TERM=xterm-256color node --experimental-strip-types test/demo-node.ts",
+    "demo:node:xterm": "TERM=xterm node --experimental-strip-types test/demo-node.ts",
+    "demo:node:default": "node --experimental-strip-types test/demo-node.ts",
+    "demo:browser": "node --experimental-strip-types test/demo-browser.ts",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --check \"src/**/*.ts\"",
+    "format:fix": "prettier --write \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "logging"
+  ],
+  "author": "Jonathan Kelsey",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.4.2",
+    "puppeteer": "^24.35.0",
+    "ts-proto": "^2.11.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {}
+}
